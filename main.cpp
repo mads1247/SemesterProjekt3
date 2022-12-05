@@ -3,6 +3,7 @@
 #include <math.h>
 #include "locate.h"
 #include "calibrate.h"
+#include "cam.h"
 #include <iostream>
 #include <ur_rtde/rtde_control_interface.h>
 #include <Eigen/Dense>
@@ -56,9 +57,11 @@ int main()
 
         locate l;
         calibrate c;
+        cam cc;
         c.setCalImages("../Desktop/SKAK/Image*.png");
         c.calculateMatrix();
-        Mat img = imread("/home/mads/Downloads/8.png");
+        cc.grabImmage("/home/simon/Desktop/test.png"); //path som billedet gemmes på
+        Mat img = imread("/home/mads/Downloads/8.png"); 
         imshow("Dis",img);
         waitKey(0);
         Mat imgfix = c.undistortImg(img);
