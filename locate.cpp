@@ -119,11 +119,13 @@ void locate::findTarget() {
 
 void locate::getBallCoords(){
     cout<<"Ball Coords "<<ballCoords.x<<", "<<ballCoords.y<<endl;
-
+    circle(imgfix,Point(ballCoords.x,ballCoords.y))
 
     temp[0] = ballCoords.x;
     temp[1] = ballCoords.y;
     temp[2] = 1;
+    circle(targetBallImg, Point(ballCoords.x,ballCoords.y), 1, Scalar(0,0,255), 3, LINE_AA);
+    imshow("dot",targetBallImg);
 
 }
 
