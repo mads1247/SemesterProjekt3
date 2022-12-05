@@ -42,6 +42,8 @@ Kastebane::Kastebane(Eigen::MatrixXf target_bord, double t)
      start2d(1,1) = start(1,1);
      start2d(2,1) = start(2,1);
 
+     Eigen::MatrixXf target_robot2d;
+
 
 
 }

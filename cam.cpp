@@ -103,7 +103,7 @@ int cam::grabImmage(std::string sti)
                 // Create an OpenCV image from a pylon image.
                 openCvImage= cv::Mat(ptrGrabResult->GetHeight(), ptrGrabResult->GetWidth(), CV_8UC3, (uint8_t *) pylonImage.GetBuffer());
                 //saving image?
-                cv::imwrite("/home/simon/Desktop/test.png",openCvImage);
+                cv::imwrite(sti,openCvImage);
 
 
 

@@ -7,7 +7,7 @@
 class Kastebane
 {
 public:
-    Kastebane(Eigen::MatrixXf taget_bord, double t);
+    Kastebane(Eigen::MatrixXf target_bord, double t);
 
 
 
@@ -29,7 +29,7 @@ private:
 
     Eigen::MatrixXf qdot;
 
-    double acceleration
+    double acceleration;
 
 
 

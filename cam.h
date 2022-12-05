@@ -13,4 +13,6 @@ public:
     int grabImmage(std::string sti);
 };
 
+
+
 #endif // CAM_H

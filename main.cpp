@@ -18,7 +18,10 @@ using namespace std::chrono;
 int main()
 {
 
-        ur_rtde::RTDEControlInterface rtde_control("192.168.100.11");
+   ur_rtde::RTDEControlInterface rtde_control("192.168.100.11");
+
+
+
 
     /*
 // Parameters
@@ -53,26 +56,28 @@ int main()
 
      *
      */
-/*
 
         locate l;
         calibrate c;
         cam cc;
         c.setCalImages("../Desktop/SKAK/Image*.png");
         c.calculateMatrix();
-        cc.grabImmage("/home/simon/Desktop/test.png"); //path som billedet gemmes på
-        Mat img = imread("/home/mads/Downloads/8.png"); 
-        imshow("Dis",img);
+        cc.grabImmage("/home/mads/Documents/test.png"); //path som billedet gemmes på
+
+
+        Mat img = imread("/home/mads/Documents/test.png");
+        //imshow("Dis",img);
         waitKey(0);
         Mat imgfix = c.undistortImg(img);
         imshow("Undis", imgfix);
         waitKey(0);
-        l.setImage("/home/mads/Downloads/8Undist.png");
+        l.setImage("/home/mads/Documents/test.png");
         l.findBall();
         //l.findTarget(); //kræver target i billede
         l.getBallCoords();
         l.getTargetCoords(); //kræver target på billede
         waitKey(0);
+
 
         Eigen::MatrixXf TransformationTableToRobot(4,4);
 
@@ -126,18 +131,15 @@ int main()
         h(2,0) = p(2,0) *0.01;
 
         std::cout << "Punktet i m: \n" << p << std::endl;
-*/
 
-
-        std::vector<double> point = {-2.7688,2.8588,-2.6188,-1.5675,1.4754,-1.5928};
-        std::vector<double> point2 = {-1.0863,-1.6679,-1.7614,-1.18,1.4935,-0.0817};
+        std::vector<double> point = {p(0,0),p(1,0),0.173,3.053,0.623,-0.012};
         double speed =0.2;
-        double acceleration = 40;
+
+        double acceleration = 0.5;
 
 
         // move to tthe generated point
-        rtde_control.moveJ(point2, speed,acceleration);
-
+        rtde_control.moveL(point);
 
         //activate gripper (how to doe?)
 
