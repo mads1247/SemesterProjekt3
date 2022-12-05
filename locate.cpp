@@ -112,7 +112,7 @@ void locate::findTarget() {
       for (int i=0 ; i < tcoords[0].size(); i++){
           tsumy += tcoords[0][i].y;
       }
-        //Average taget y value
+        //Average target y value
     int tavy = tsumy/tcoords[0].size();
     targetCoords.y = tavy;
 }
