@@ -52,7 +52,7 @@ int main()
 
      *
      */
-
+/*
 
         locate l;
         calibrate c;
@@ -73,10 +73,10 @@ int main()
 
         Eigen::MatrixXf TransformationTableToRobot(4,4);
 
-        TransformationTableToRobot << -0.3836, 0.9235, 0, 50.4333,
-                                       0.9235, 0.3836, 0, -62.7320,
-                                       0,      0,      1, 17.16,
-                                       0,      0,      0, 1;
+        TransformationTableToRobot << -0.3773,0.9261,0,50.4975,
+                0.9261,0.3773,0,-63.1134,
+                0,0,1,1,
+                0,0,0,1;
 
 
         Eigen::Matrix3f TransformationCameraToTable;
@@ -123,15 +123,17 @@ int main()
         h(2,0) = p(2,0) *0.01;
 
         std::cout << "Punktet i m: \n" << p << std::endl;
+*/
 
 
-        std::vector<double> point = {p(0,0), p(1,0), p(2,0), 3.07, 0.6, 0.02};
-        double speed =0.1;
-        double acceleration = 0.1;
+        std::vector<double> point = {-2.7688,2.8588,-2.6188,-1.5675,1.4754,-1.5928};
+        std::vector<double> point2 = {-1.0863,-1.6679,-1.7614,-1.18,1.4935,-0.0817};
+        double speed =0.2;
+        double acceleration = 40;
 
 
         // move to tthe generated point
-        rtde_control.moveL(point, speed,acceleration);
+        rtde_control.moveJ(point2, speed,acceleration);
 
 
         //activate gripper (how to doe?)
