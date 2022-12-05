@@ -10,7 +10,7 @@ class cam
 {
 public:
     cam();
-    int grabImmage();
+    int grabImmage(std::string sti);
 };
 
 #endif // CAM_H
