@@ -10,7 +10,7 @@ cam::cam()
 
 }
 
-int cam::grabImmage()
+int cam::grabImmage(std::string sti)
 {
     int myExposure = 30000;
 
