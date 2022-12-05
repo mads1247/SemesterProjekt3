@@ -56,6 +56,7 @@ int main()
 
         locate l;
         calibrate c;
+        cam cc;
         c.setCalImages("../Desktop/SKAK/Image*.png");
         c.calculateMatrix();
         Mat img = imread("/home/mads/Downloads/8.png");
