@@ -12,6 +12,12 @@ public:
 
     double getV0_f() const;
 
+    double getAcceleration() const;
+
+    const std::vector<double> &getMqdot() const;
+
+    const std::vector<double> &getMq() const;
+
 private:
 
     double angle = 0.7854;
@@ -23,6 +29,10 @@ private:
     double v0_f;
 
     double acceleration;
+
+    std::vector<double> mqdot;
+    std::vector<double> mq;
+
 
 
 

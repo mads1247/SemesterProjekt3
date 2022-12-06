@@ -11,26 +11,45 @@
 #include <chrono>
 #include "kastebane.h"
 
+
 using namespace cv;
 using namespace std;
 using namespace ur_rtde;
 using namespace std::chrono;
 
+
 int main()
 {
 
-   //ur_rtde::RTDEControlInterface rtde_control("192.168.100.11");
-
+/*
     Eigen::MatrixXf target_bord(3,1);
-    target_bord << 0.200,
-            0.250,
+    target_bord << 0.075,
+            -0.225,
             0;
 
     double t = 0.25;
 
     Kastebane kast(target_bord,t);
 
-    std::cout << kast.getV0_f() << std::endl;
+    for (int i = 0; i < 6; ++i) {
+        std::cout << kast.getMq()[i] << std::endl;
+    }
+
+
+    ur_rtde::RTDEControlInterface rtde_control("192.168.100.11");
+
+    rtde_control.moveJ(kast.getMq(),0.5,0.2, false);
+
+    std::this_thread::sleep_for(0.5s);
+
+    rtde_control.speedJ(kast.getMqdot(),kast.getAcceleration(),t);
+
+    std::this_thread::sleep_for(0.25s);
+
+    rtde_control.speedStop(kast.getAcceleration());
+
+    rtde_control.stopScript();
+    */
 
 
     /*
@@ -66,7 +85,7 @@ int main()
 
      *
      */
-/*
+
         locate l;
         calibrate c;
         cam cc;
@@ -147,18 +166,15 @@ int main()
 
         double acceleration = 0.5;
 
-
+/*
         // move to tthe generated point
         rtde_control.moveL(point);
 
         //activate gripper (how to doe?)
 
         rtde_control.stopScript();
-
-
-
-
 */
         return (0);
 
 }
+

@@ -64,18 +64,16 @@ Kastebane::Kastebane(Eigen::MatrixXf target_bord, double t)
 
      double x = kasteLængde;
 
-
      double y0 = start(2,0);
 
 
      double v0 = ((sqrt(2)*sqrt(((-g)/(y-y0-(x*tan(angle))+(x0*tan(angle)))))*(x-x0))/(2*cos(angle)));
 
-     v0_f = v0;
+     std::cout << v0 << std::endl;
 
-     std::cout << "v0 :" << v0 << std::endl;
 
      Eigen::MatrixXf retning(3,1);
-     retning << kast,
+     retning << -kast,
              kasteLængde;
 
     //std::cout << retning << std::endl;
@@ -89,15 +87,24 @@ Kastebane::Kastebane(Eigen::MatrixXf target_bord, double t)
     v = rUnit*v0;
     //std::cout << "v :" << v << std::endl;
     qdot = Jacobian.completeOrthogonalDecomposition().pseudoInverse() * v;
-    std::cout <<"qdot = " << qdot << std::endl;
+
 
     Eigen::MatrixXf qdotdot(6,1);
     qdotdot = qdot/t;
 
 
-    startPos = slutPos - 1/2*qdotdot*pow(t,2);
+    startPos = slutPos - 0.5*qdotdot*pow(t,2);
 
-      std::cout <<"startPos = " << startPos << std::endl;
+
+    for (int i = 0; i < 6; ++i) {
+        mqdot.push_back(qdot(i,0));
+    }
+
+    for (int i = 0; i < 6; ++i) {
+        mq.push_back(slutPos(i,0));
+    }
+
+    acceleration = qdotdot.maxCoeff();
 
 
 
@@ -108,4 +115,19 @@ Kastebane::Kastebane(Eigen::MatrixXf target_bord, double t)
 double Kastebane::getV0_f() const
 {
     return v0_f;
+}
+
+double Kastebane::getAcceleration() const
+{
+    return acceleration;
+}
+
+const std::vector<double> &Kastebane::getMqdot() const
+{
+    return mqdot;
+}
+
+const std::vector<double> &Kastebane::getMq() const
+{
+    return mq;
 }
