@@ -2,32 +2,25 @@
 #define KASTEBANE_H
 
 #include <Eigen/Dense>
-
+#include <cmath>
+#include <iostream>
 
 class Kastebane
 {
 public:
     Kastebane(Eigen::MatrixXf target_bord, double t);
 
-
+    double getV0_f() const;
 
 private:
-    Eigen::MatrixXf rotm;
-    Eigen::MatrixXf translation;
 
-    Eigen::MatrixXf slutPos;
-     Eigen::MatrixXf startPos;
-    Eigen::MatrixXf transform;
-
-    int angle = 45;
+    double angle = 0.7854;
     int x0 = 0;
     int y = 0;
     int y0 = 0;
     double g = 9.82;
 
-    Eigen::MatrixXf Jacobian;
-
-    Eigen::MatrixXf qdot;
+    double v0_f;
 
     double acceleration;
 

@@ -9,6 +9,7 @@
 #include <Eigen/Dense>
 #include <thread>
 #include <chrono>
+#include "kastebane.h"
 
 using namespace cv;
 using namespace std;
@@ -18,9 +19,18 @@ using namespace std::chrono;
 int main()
 {
 
-   ur_rtde::RTDEControlInterface rtde_control("192.168.100.11");
+   //ur_rtde::RTDEControlInterface rtde_control("192.168.100.11");
 
+    Eigen::MatrixXf target_bord(3,1);
+    target_bord << 0.200,
+            0.250,
+            0;
 
+    double t = 0.25;
+
+    Kastebane kast(target_bord,t);
+
+    std::cout << kast.getV0_f() << std::endl;
 
 
     /*
@@ -56,7 +66,7 @@ int main()
 
      *
      */
-
+/*
         locate l;
         calibrate c;
         cam cc;
@@ -148,7 +158,7 @@ int main()
 
 
 
-
+*/
         return (0);
 
 }

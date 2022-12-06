@@ -3,6 +3,16 @@
 Kastebane::Kastebane(Eigen::MatrixXf target_bord, double t)
 {
 
+    Eigen::MatrixXf rotm(3,3);
+    Eigen::MatrixXf translation(3,1);
+    Eigen::MatrixXf slutPos(6,1);
+    Eigen::MatrixXf startPos(6,1);
+    Eigen::MatrixXf transform(4,4);
+    Eigen::MatrixXf Jacobian(3,6);
+    Eigen::MatrixXf qdot(6,1);
+
+
+
     Jacobian << 0.4811,-0.2437,-0.0767,-0.0138,0.2433,0,
             0.0772, 0.5153,0.1621,0.0291,0.0864,0,
             0,0.4679,0.6352,0.2719,-0.0062,0;
@@ -28,22 +38,74 @@ Kastebane::Kastebane(Eigen::MatrixXf target_bord, double t)
                 1.4675,
                -0.0564;
 
-    Eigen::MatrixXf taget_robot = rotm*target_bord+translation;
+    Eigen::MatrixXf target_robot(3,1);
+    target_robot = rotm*target_bord+translation;
 
-    Eigen::MatrixXf tcpForskydelse;
+    Eigen::MatrixXf tcpForskydelse(4,1);
     tcpForskydelse <<   0,
             0,
             0.176,
             1;
 
-    Eigen::MatrixXf start = transform * tcpForskydelse;
+    Eigen::MatrixXf start(4,1);
+    start = transform * tcpForskydelse;
 
-     Eigen::MatrixXf start2d;
-     start2d(1,1) = start(1,1);
-     start2d(2,1) = start(2,1);
+     Eigen::MatrixXf start2d(2,1);
+     start2d(0,0) = start(0,0);
+     start2d(1,0) = start(1,0);
 
-     Eigen::MatrixXf target_robot2d;
+     Eigen::MatrixXf target_robot2d(2,1);
+
+     Eigen::MatrixXf kast(2,1);
+     kast = target_robot2d-start2d;
+
+
+     double kasteLængde = sqrt(pow(kast(0,0),2)+pow(kast(1,0),2));
+
+     double x = kasteLængde;
+
+
+     double y0 = start(2,0);
+
+
+     double v0 = ((sqrt(2)*sqrt(((-g)/(y-y0-(x*tan(angle))+(x0*tan(angle)))))*(x-x0))/(2*cos(angle)));
+
+     v0_f = v0;
+
+     std::cout << "v0 :" << v0 << std::endl;
+
+     Eigen::MatrixXf retning(3,1);
+     retning << kast,
+             kasteLængde;
+
+    //std::cout << retning << std::endl;
+
+    Eigen::MatrixXf rUnit(3,1);
+    rUnit = retning/sqrt(pow(retning(0,0),2)+pow(retning(1,0),2)+pow(retning(2,0),2));
+
+    //std::cout << "runit :" << rUnit << std::endl;
+
+    Eigen::MatrixXf v(3,1);
+    v = rUnit*v0;
+    //std::cout << "v :" << v << std::endl;
+    qdot = Jacobian.completeOrthogonalDecomposition().pseudoInverse() * v;
+    std::cout <<"qdot = " << qdot << std::endl;
+
+    Eigen::MatrixXf qdotdot(6,1);
+    qdotdot = qdot/t;
+
+
+    startPos = slutPos - 1/2*qdotdot*pow(t,2);
+
+      std::cout <<"startPos = " << startPos << std::endl;
 
 
 
+}
+
+
+
+double Kastebane::getV0_f() const
+{
+    return v0_f;
 }
