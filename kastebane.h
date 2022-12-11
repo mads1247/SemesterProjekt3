@@ -8,6 +8,7 @@
 class Kastebane
 {
 public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     Kastebane(Eigen::MatrixXf target_bord, double t);
 
     double getV0_f() const;

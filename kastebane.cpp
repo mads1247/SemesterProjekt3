@@ -3,6 +3,7 @@
 Kastebane::Kastebane(Eigen::MatrixXf target_bord, double t)
 {
 
+
     Eigen::MatrixXf rotm(3,3);
     Eigen::MatrixXf translation(3,1);
     Eigen::MatrixXf slutPos(6,1);
@@ -59,17 +60,15 @@ Kastebane::Kastebane(Eigen::MatrixXf target_bord, double t)
      Eigen::MatrixXf kast(2,1);
      kast = target_robot2d-start2d;
 
-
      double kasteLængde = sqrt(pow(kast(0,0),2)+pow(kast(1,0),2));
 
      double x = kasteLængde;
 
      double y0 = start(2,0);
 
-
      double v0 = ((sqrt(2)*sqrt(((-g)/(y-y0-(x*tan(angle))+(x0*tan(angle)))))*(x-x0))/(2*cos(angle)));
 
-     std::cout << v0 << std::endl;
+     std::cout << "v0 :  "<< v0 << std::endl;
 
 
      Eigen::MatrixXf retning(3,1);
@@ -101,14 +100,12 @@ Kastebane::Kastebane(Eigen::MatrixXf target_bord, double t)
     }
 
     for (int i = 0; i < 6; ++i) {
-        mq.push_back(slutPos(i,0));
+        mq.push_back(startPos(i,0));
     }
 
     acceleration = qdotdot.maxCoeff();
-
-
-
 }
+
 
 
 
