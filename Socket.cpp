@@ -10,15 +10,104 @@ Socket::Socket(QObject *parent) : QObject(parent)
 
 void Socket::connect(){
 
-        socket->write("\n");
+    socket = new QTcpSocket(this);
 
+    socket->connectToHost("192.168.100.10", portNR);
+
+    if(socket->waitForConnected(3000))
+    {
+        qDebug() << "Connected!";
+
+        //Verbose
+        socket->write("VERBOSE=1    \n");
+        socket->waitForBytesWritten(1000);
+        socket->waitForReadyRead(3000);
+        qDebug() << "Reading:" << socket->bytesAvailable();
+        qDebug() << socket->readAll();
+    }
+    else{
+        qDebug() << "Not connected!";
+    }
+}
+
+void Socket::disconnect(){
+    socket->write("Bye()\n");
+    socket->waitForBytesWritten(1000);
+    socket->waitForReadyRead(3000);
+    qDebug() << "Reading:" << socket->bytesAvailable();
+    qDebug() << socket->readAll();
+}
+
+void Socket::grip(){
+    socket->write("grip()\n");
+    socket->waitForBytesWritten(1000);
+    socket->waitForReadyRead(3000);
+    qDebug() << "Reading:" << socket->bytesAvailable();
+    qDebug() << socket->readAll();
+    socket->waitForReadyRead(3000);
+    qDebug() << "Reading:" << socket->bytesAvailable();
+    qDebug() << socket->readAll();
+}
+
+void Socket::grip(std::string forceInput){
+    char force[2];
+    force[0]=forceInput.at(0);
+    force[1]=forceInput.at(1);
+    socket->write("grip(");
+    socket->write(force);
+    socket->write(")\n");
+    socket->waitForBytesWritten(1000);
+    socket->waitForReadyRead(3000);
+    qDebug() << "Reading:" << socket->bytesAvailable();
+    qDebug() << socket->readAll();
+    socket->waitForReadyRead(3000);
+    qDebug() << "Reading:" << socket->bytesAvailable();
+    qDebug() << socket->readAll();
+}
+
+void Socket::release(){
+    socket->write("release()\n");
+    socket->waitForBytesWritten(1000);
+    socket->waitForReadyRead(3000);
+    qDebug() << "Reading:" << socket->bytesAvailable();
+    qDebug() << socket->readAll();
+    socket->waitForReadyRead(3000);
+    qDebug() << "Reading:" << socket->bytesAvailable();
+    qDebug() << socket->readAll();
+}
+
+void Socket::release(std::string releaseDistance){
+    char dist[2];
+    dist[0]=releaseDistance.at(0);
+    dist[1]=releaseDistance.at(1);
+    socket->write("release(");
+    socket->write(dist);
+    socket->write(")\n");
+    socket->waitForBytesWritten(1000);
+    socket->waitForReadyRead(3000);
+    qDebug() << "Reading:" << socket->bytesAvailable();
+    qDebug() << socket->readAll();
+    socket->waitForReadyRead(3000);
+    qDebug() << "Reading:" << socket->bytesAvailable();
+    qDebug() << socket->readAll();
+}
+
+void Socket::home(){
+    socket->write("home()\n");
+    socket->waitForBytesWritten(1000);
+    socket->waitForReadyRead(3000);
+    qDebug() << "Reading:" << socket->bytesAvailable();
+    qDebug() << socket->readAll();
+    socket->waitForReadyRead(3000);
+    qDebug() << "Reading:" << socket->bytesAvailable();
+    qDebug() << socket->readAll();
 }
 
 void Socket::connectMatlab(){
 
 socket = new QTcpSocket(this);
 
-socket->connectToHost("127.0.0.1", 30000);
+socket->connectToHost("127.0.0.1", 30003);
 
 if(socket->waitForConnected(3000))
 {
@@ -38,14 +127,13 @@ void Socket::writeMatlab(double input1)
     char* res;
 
 
-    for (int i = 0; i < sizeof(input1); ++i) {
-        res[i] = in1[i];
+    for (int i = 0; i < sizeof(double); ++i) {
+       res[i] = in1[i];
     }
 
 
     socket->write(res);
-    //socket->write("\n");
-    socket->waitForBytesWritten(2000);
+
 }
 
 std::string Socket::readMatlab()

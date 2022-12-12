@@ -13,8 +13,13 @@ class Socket : public QObject
     Q_OBJECT
 public:
     explicit Socket(QObject *parent = nullptr);
-
     void connect();
+    void disconnect();
+    void grip();
+    void grip(std::string forceInput);
+    void release();
+    void release(std::string releaseDistance);
+    void home();
     void connectMatlab();
 
     void writeMatlab(double input1);
@@ -29,7 +34,7 @@ private:
     QTcpSocket *socket;
 
     //port nummer til robotten
-    int portNR = 30000;
+    int portNR = 1000;
 
 
 
