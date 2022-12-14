@@ -1,6 +1,7 @@
 #include "Socket.h"
 #include <iostream>
 #include <ostream>
+#include <cstring>
 
 
 Socket::Socket(QObject *parent) : QObject(parent)
@@ -107,7 +108,7 @@ void Socket::connectMatlab(){
 
 socket = new QTcpSocket(this);
 
-socket->connectToHost("127.0.0.1", 30003);
+socket->connectToHost("127.0.0.1", 30000);
 
 if(socket->waitForConnected(3000))
 {
@@ -123,6 +124,7 @@ else{
 void Socket::writeMatlab(double input1)
 {
 
+    /*
     uint8_t* in1 = (uint8_t*)(&input1);
     char* res;
 
@@ -130,9 +132,14 @@ void Socket::writeMatlab(double input1)
     for (int i = 0; i < sizeof(double); ++i) {
        res[i] = in1[i];
     }
+    */
 
+    std::string s = std::to_string(input1);
 
-    socket->write(res);
+    const char* c = s.c_str();
+
+    socket->write(c);
+    socket->write(",");
 
 }
 

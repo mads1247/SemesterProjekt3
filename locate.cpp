@@ -115,6 +115,11 @@ void locate::findTarget() {
         //Average target y value
     int tavy = tsumy/tcoords[0].size();
     targetCoords.y = tavy;
+
+    targetCord[0] = tavx;
+    targetCord[1] = tavy;
+    targetCord[2] = 1;
+
 }
 
 void locate::getBallCoords(){
@@ -125,6 +130,7 @@ void locate::getBallCoords(){
     temp[1] = ballCoords.y;
     temp[2] = 1;
     circle(targetBallImg, Point(ballCoords.x,ballCoords.y), 1, Scalar(0,0,255), 3, LINE_AA);
+    circle(targetBallImg, Point(targetCoords.x,targetCoords.y), 1, Scalar(0,255,255), 3, LINE_AA);
     imshow("dot",targetBallImg);
     waitKey(0);
 

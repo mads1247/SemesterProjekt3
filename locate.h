@@ -24,6 +24,8 @@ public:
 
 
     double temp[3];
+
+    double targetCord[3];
 };
 
 #endif // LOCATE_H
