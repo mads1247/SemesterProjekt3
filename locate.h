@@ -20,6 +20,7 @@ public:
     void setImage(Mat);
     void setImage(string);
     void getBallCoords();
+    void findTargetHough();
     Point getTargetCoords();
 
 

@@ -69,6 +69,41 @@ void locate::findBall() {
     ballCoords.y = bavy;
 }
 
+void locate::findTargetHough() {
+    Mat gray , result;
+    result = targetBallImg;
+    cvtColor(targetBallImg, gray, COLOR_RGB2GRAY);
+
+    medianBlur(gray, gray, 5);
+
+    vector<Vec3f> circles;
+    HoughCircles(gray, circles, HOUGH_GRADIENT, 1,
+                    gray.rows/16,  // change this value to detect circles with different distances to each other
+                    100, 30, 30, 80 // change the last two parameters
+               // (min_radius & max_radius) to detect larger circles
+       );
+    targetCoords.x = circles[0][0];
+    targetCoords.y = circles[0][1];
+    for( size_t i = 0; i < circles.size(); i++ )
+        {
+            Vec3i c = circles[i];
+            Point center = Point(c[0], c[1]);
+            // circle center
+            circle(result, center, 1, Scalar(0,255,0), 3, LINE_AA);
+            // circle outline
+            int radius = c[2];
+            circle(result, center, radius, Scalar(255,0,0), 3, LINE_AA);
+        }
+
+    targetCord[0]=targetCoords.x;
+    targetCord[1]=targetCoords.y;
+    targetCord[2]=1;
+
+    imshow("Circles", result);
+    waitKey(0);
+
+}
+
 void locate::findTarget() {
 
     //Ringen lokaliseres med følgende HSV stats
@@ -82,6 +117,7 @@ void locate::findTarget() {
     inRange(imageHSV, ringLower, ringUpper, target);
 
 
+
     //noise fjernes ved erode og dilate
     double morph_size = 1.3;
     Mat relement = getStructuringElement(MORPH_ELLIPSE, Size(2 * morph_size +1, 2*morph_size +1),
@@ -91,7 +127,7 @@ void locate::findTarget() {
 
     erode(target, rerod, relement, Point(-1,-1),1);
     dilate(rerod, target, relement, Point(-1,-1),1);
-
+    imshow("target", target);
     //Find targetCoords
     vector<vector<Point> > tcoords;
 
