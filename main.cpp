@@ -92,7 +92,7 @@ int main()
     //imshow("Undis", imgfix);
     l.setImage("/home/mads/Documents/test.png");
     l.findBall();
-    l.findTargetHough(); //kræver target i billede
+    l.findTargetHoughBin(); //kræver target i billede
 
 
     l.getBallCoords();

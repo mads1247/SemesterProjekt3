@@ -108,7 +108,7 @@ void Socket::connectMatlab(){
 
 socket = new QTcpSocket(this);
 
-socket->connectToHost("127.0.0.1", 30002);
+socket->connectToHost("127.0.0.1", 30003);
 
 if(socket->waitForConnected(3000))
 {

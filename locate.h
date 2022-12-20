@@ -21,6 +21,7 @@ public:
     void setImage(string);
     void getBallCoords();
     void findTargetHough();
+    void findTargetHoughBin();
     Point getTargetCoords();
 
 
